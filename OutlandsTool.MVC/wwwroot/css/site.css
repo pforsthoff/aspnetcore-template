@@ -1,0 +1,302 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+body {
+    color: #6a6c6f;
+    background-color: #f1f3f6;
+    margin-top: 30px;
+}
+
+.container {
+    max-width: 960px;
+}
+
+.panel-default > .panel-heading {
+    color: #333;
+    background-color: #fff;
+    border-color: #e4e5e7;
+    padding: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+    .panel-default > .panel-heading a {
+        display: block;
+        padding: 10px 15px;
+    }
+
+.panel-default > .panel-heading a:after {
+    content: "";
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    float: right;
+    transition: transform .25s linear;
+    -webkit-transition: -webkit-transform .25s linear;
+}
+
+.panel-default > .panel-heading a[aria-expanded="true"] {
+    background-color: #eee;
+}
+
+    .panel-default > .panel-heading a[aria-expanded="true"]:after {
+        content: "\2212";
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+
+.panel-default > .panel-heading a[aria-expanded="false"]:after {
+    content: "\002b";
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.accordion-option {
+    width: 100%;
+    float: left;
+    clear: both;
+    margin: 15px 0;
+}
+
+    .accordion-option .title {
+        font-size: 20px;
+        font-weight: bold;
+        float: left;
+        padding: 0;
+        margin: 0;
+    }
+
+    .accordion-option .toggle-accordion {
+        float: right;
+        font-size: 16px;
+        color: #6a6c6f;
+    }
+
+    .accordion-option .toggle-accordion:before {
+        content: "Expand All";
+    }
+
+    .accordion-option .toggle-accordion.active:before {
+        content: "Collapse All";
+    }
+
+td.core {
+    border-right: 1px SOLID #000000;
+    background-color: #3c78d8;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: 'Arial';
+    font-size: 8pt;
+    vertical-align: middle;
+    white-space: nowrap;
+    direction: ltr;
+}
+td.extract {
+    border-right: 1px SOLID #000000;
+    background-color: #351c75;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: 'Arial';
+    font-size: 8pt;
+    vertical-align: middle;
+    white-space: nowrap;
+    direction: ltr;
+}
+td.skillscroll {
+    border-right: 1px SOLID #000000;
+    background-color: #38761d;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: 'Arial';
+    font-size: 8pt;
+    vertical-align: middle;
+    white-space: nowrap;
+    direction: ltr;
+}
+td.tmap {
+    border-right: 1px SOLID #000000;
+    background-color: #f1c232;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: 'Arial';
+    font-size: 8pt;
+    vertical-align: middle;
+    white-space: nowrap;
+    direction: ltr;
+}
+td.special {
+    border-right: 1px SOLID #000000;
+    background-color: #000000;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: 'Arial';
+    font-size: 8pt;
+    vertical-align: middle;
+    white-space: nowrap;
+    direction: ltr;
+}
+td.mcd {
+    border-right: 1px SOLID #000000;
+    background-color: #000000;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: 'Arial';
+    font-size: 8pt;
+    vertical-align: middle;
+    white-space: nowrap;
+    direction: ltr;
+}
+td.skillball {
+    border-right: 1px SOLID #000000;
+    background-color: #000000;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: 'Arial';
+    font-size: 8pt;
+    vertical-align: middle;
+    white-space: nowrap;
+    direction: ltr;
+}
+td.link {
+    border-bottom: 3px SOLID #000000;
+    border-right: 1px SOLID #000000;
+    background-color: #ff0000;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: 'Arial';
+    font-size: 8pt;
+    vertical-align: middle;
+    white-space: nowrap;
+    direction: ltr;
+}
+tr {
+    height: 20px
+}
+td {
+    text-align: center;
+    font-family: 'Arial';
+    font-size: 8pt;
+    vertical-align: middle;
+    white-space: nowrap;
+    direction: ltr;
+}
+
+th.row-headers-background {
+    border-bottom: 3px SOLID #000000;
+    background-color: #434343;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: 'Arial';
+    font-size: 10pt;
+    vertical-align: bottom;
+    white-space: nowrap;
+    direction: ltr;
+    padding: 2px 3px 2px 3px;
+}
+
+table.dataTable tr.group td {
+    font-weight: bold;
+    border-bottom: 3px SOLID #000000;
+    background-color: #434343;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: 'Arial';
+    font-size: 10pt;
+    vertical-align: bottom;
+    white-space: nowrap;
+    direction: ltr;
+    padding: 2px 3px 2px 3px;
+}
+div.dataTables_wrapper div.dataTables_processing {
+    top: 0;
+}
+.dataTables_filter {
+    float: right !important;
+}

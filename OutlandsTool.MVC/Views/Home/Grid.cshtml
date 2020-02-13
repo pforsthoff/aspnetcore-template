@@ -1,0 +1,541 @@
+﻿@using OutlandsTool.MVC.ViewModels
+@using OutlandsTool.ServiceModel.Entities
+@model OutlandsTool.MVC.ViewModels.LootViewModel
+@{
+    ViewData["Title"] = "Grid";
+}
+
+    <div class="row">
+        <div class="text-center">
+            <h1 class="display-4"><img src="@Url.Content("~/img/uo_logo.jpg")" alt="IMAGES" />Outlands Loot Split</h1>
+        </div>
+        <div>
+            <button id="btnsubmit" type="submit" class="btn btn-success">Roll</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button id="btnsubmit" type="submit" class="btn btn-danger">Clear</button>
+            &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+            <button id="btnsubmit" type="submit" class="btn btn-primary">Toggle Lock</button>
+            <button id="btnsubmit" type="submit" class="btn btn-success" style="float: right;">Save Loot Split</button>
+            <hr />
+        </div>
+        <div >
+            @using (Html.BeginForm("SubmitLootSplit", "Home", FormMethod.Post, new { id = "SubmitLootSplit" }))
+            {
+                <table id="loot-table" class="table table-sm table-condensed " cellspacing="0" cellpadding="0" width="50%">
+                    <thead>
+                        <tr>
+                            <th class="row-headers-background">@Html.Label("Type", "Type", new { @class = "dataTable-head-column" })</th>
+                            <th class="row-headers-background">@Html.Label("ImagePath", "ImagePath", new { @class = "dataTable-head-column" })</th>
+                            <th class="row-headers-background">@Html.Label("", "", new { @class = "dataTable-head-column" })</th>
+                            <th class="row-headers-background">@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                            <th class="row-headers-background">@Html.Label("Price", "Price", new { @class = "dataTable-head-column" })</th>
+                            <th class="row-headers-background">@Html.Label("Quantity", "Quantity", new { @class = "dataTable-head-column" })</th>
+                        </tr>
+                    </thead>
+                    @for (int i = 0; i < Model.LootItems.Count; i++)
+                    {
+                        <tr style='height:20px;'>
+                            <td class="s36" dir="ltr">Core</td>
+                            <td>
+                                <img src="@Url.Content(String.Format("~/img/{0}", Model.LootItems[i].ImagePath))" alt="IMAGES" /><label>&nbsp;&nbsp;@Model.LootItems[i].Name</label>
+                            </td>
+                            <td>@Html.EditorFor(m => m.LootItems[i].Quantity, new { htmlAttributes = new { @id = Model.LootItems[i].LootItemId } })</td>
+                        </tr>
+                    }
+                    <tr style='height:20px;'>
+                        <td colspan="2">
+                            <button id="btnsubmit" type="submit" class="btn btn-success" style="float: right;">Generate Loot Split Sheet</button>
+                        </td>
+                    </tr>
+                </table>
+            }
+        </div>
+        </div>
+        <div class="col-sm-12" id="tableActions">
+        </div>
+        <script>
+                    var dt = new Date();
+                    var excelfilename = (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear() + "_" + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+                    var table = null;
+                    var selected = [];
+                    loadTable();
+                    var collapsedGroups = {};
+                    function loadTable() {
+                        table = $('#loot-table').DataTable({
+                            order: [[0, 'asc']],
+                            rowGroup: {
+                        // Uses the 'row group' plugin - grouped by type
+                        dataSrc: 'type',
+                        startRender: function (rows, group) {
+                            var collapsed = !!collapsedGroups[group];
+                            rows.nodes().each(function (r) {
+                                r.style.display = collapsed ? 'none' : '';
+                            });    
+                            // Add category name to the <tr>. NOTE: Hardcoded colspan
+                            return $('<tr/>')
+                                .append('<td colspan="8">' + group + ' (' + rows.count() + ')</td>')
+                                .attr('data-name', group)
+                                .toggleClass('collapsed', collapsed);
+                        }
+                            },
+                            //different styles for each type
+                            "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                              if(aData.type == "Core"){
+                                $("td:nth-child(1)", nRow).addClass("core");
+                                }
+                                if(aData.type == "Extract"){
+                                $("td:nth-child(1)", nRow).addClass("extract");
+                                }
+                                if(aData.type == "SkillScroll"){
+                                $("td:nth-child(1)", nRow).addClass("skillscroll");
+                                }
+                                 if(aData.type == "Tmap"){
+                                $("td:nth-child(1)", nRow).addClass("tmap");
+                                }
+                                 if(aData.type == "Special"){
+                                $("td:nth-child(1)", nRow).addClass("special");
+                                }
+                                if(aData.type == "Link"){
+                                $("td:nth-child(1)", nRow).addClass("link");
+                                }
+                            },
+                                fixedColumns: true,
+                                    fixedColumns:
+                                {
+                                    leftColumns: 2
+                                }
+                            ,
+                            "language": {
+                            "processing": "<i class='fa fa-refresh fa-spin'></i>",
+                            "searchPlaceholder": "Filter Loot Items",
+                            "search": ""
+                          },
+                            //"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                            "pageLength": 100,
+                            stateSave: true,
+                            dom: 'frt',
+                            "filterOptions": {
+                                searchButton: "Search",
+                                clearSearchButton: "ClearSearch",
+                                searchContainer: "SearchContainer"
+                            },
+                            "serverSide": true,
+                            "ajax": {
+                                "url": "/home/AjaxLoot",
+                                "type": "POST",
+                                data: function (d) {
+                                    d.lootSplitId = "0";
+                                }
+                            },
+                            "columns": [
+                                { "data": "type" },
+                                { "data": "lootItemId" },
+                                {"data": "imagePath",
+                                    "render": function (data) {
+                                        return '<img src="/img/' + data + '" />';
+                                    }
+                            },  
+                               
+                                { "data": "description" },
+                                { "data": "price" },
+                                { "data": "quantity" }
+                            ],
+                            "aoColumnDefs": [
+
+                                //{
+                                //    'targets': 0,
+                                //    'checkboxes': {
+                                //        'selectRow': false,
+                                //        'orderable': false,
+                                //        'className': 'select-checkbox'
+                                //    }
+                                //},
+                                {
+                                    'targets': 1,
+                                    'visible': false,
+                                    'orderable': true
+                                },
+                                { "width": "30%", "targets": 0 }
+                                //// Actions column not orderable
+                                //{
+                                //    'targets': 2,
+                                //    'orderable': true
+                                //}
+                            ],
+                            'stateSaveParams': function (settings, data) {
+                                data.columns.forEach(function (column) {
+                                    delete column.visible;
+                                });
+                            },
+                        });
+                        //row group click
+                       $('#loot-table tbody').on('click', 'tr.group-start', function () {
+                           var name = $(this).data('name');
+                           console.log("name: " + name);
+                        collapsedGroups[name] = !collapsedGroups[name];
+                        table.draw(false);
+                        });  
+                        //table.search('').columns().search('').draw();
+                        //Place Excel button at bottom of grid
+                        table.buttons().container().appendTo('#tableActions');
+                        $(document).contextmenu({
+                            delegate: ".dataTable tr",
+                            menu: [
+                                { title: "<i class='glyphicon-margin glyphicon glyphicon-remove' style='color: orange'></i> Cancel Row Update", cmd: "remove" },
+                                { title: "<i class='glyphicon-margin glyphicon glyphicon-remove-sign' style='color: orange'></i> Cancel All Rows Update", cmd: "removeall" },
+                                { title: "<i class='glyphicon-margin glyphicon glyphicon-floppy-disk glyphicon-margin' style='color: green'></i> Update Selected Rows", cmd: "update" },
+                                { title: "<i class='glyphicon-margin glyphicon glyphicon-trash glyphicon-margin' style='color: red'></i> Delete Selected Rows", cmd: "delete" },
+                                { title: "<i class='glyphicon-margin glyphicon glyphicon-plus glyphicon-margin' style='color: blue'></i> Create New Row", cmd: "add" },
+                                { title: "<i class='glyphicon-margin glyphicon glyphicon-floppy-disk glyphicon-margin' style='color: blue'></i> ...Save New Row", cmd: "addupdate" },
+                            ],
+
+                            selector: 'span.context-menu',
+                            className: 'css-title',
+                            select: function (event, ui) {
+                                var row = ui.target.closest("tr")
+                                switch (ui.cmd) {
+                                    case "remove":
+                                        CancelRowEdit(row);
+                                        break;
+                                    case "removeall":
+                                        CancelAllRowsEdit(row);
+                                        break;
+                                    case "update":
+                                        UpdateRows(row);
+                                        break;
+                                    case "add":
+                                        ShowAddRow(row);
+                                        break;
+                                    case "addupdate":
+                                        SaveAddRow(row);
+                                        break;
+                                    case "delete":
+                                        DeleteSelectedRows();
+                                        break;
+                                }
+                            },
+                            beforeOpen: function (event, ui) {
+                                var $menu = ui.menu,
+                                    $target = ui.target,
+                                    extraData = ui.extraData;
+                                ui.menu.zIndex(9999);
+                            }
+                        });
+                        table.MakeCellsEditable({
+                        //dataTables cellEdit
+                            "columns": [4, 5],
+                            "inputTypes": [
+                            {
+                                "name": "price",
+                                "column": 4, // NAME
+                                "css": "edittext",  // edit text box width
+                                "maxLength": 20, //prevent characters past
+                                "required": true // required field validator
+
+                            },
+                            {
+                                "name": "quantity",
+                                "column": 5, // NAME
+                                "css": "edittext",  // edit text box width
+                                "maxLength": 20, //prevent characters past
+                                "required": true // required field validator
+
+                            },]
+                        }),
+                            $("body")
+                                .tooltip({
+                                    selector: '[data-toggle="tooltip"]',
+                                    container: 'body'
+                                });
+                        };
+
+                    function CancelRowEdit(e) {
+                        if ($('#newrow').length) {
+                            $('#newrow').remove();
+                        }
+                        $(this).UnselectRow(e);
+                    }
+                    function CancelAllRowsEdit(e) {
+                        $(this).UnselectAllRows($(e));
+                    }
+
+                    function ResetSort() {
+                        localStorage.removeItem('DataTables_' + window.location.pathname);
+                        table.order.neutral().draw();
+                    }
+
+                    function UpdateRows(e) {
+                        var row = $(e).closest('tr');
+                        var form = $('#table-form').closest('form');
+                        if (form.valid()) {
+                            UpdateSelectedRows(row);
+                        }
+                    }
+
+                    $(document).on('click', '#btnQuery',
+                            function (e) {
+                                e.preventDefault();
+                                var id = this.id;
+                                table.ajax.reload();
+
+                        });
+                    function ShowAddRow(e) {
+                    //Check for existing new row
+                    if (!$('#newrow').length)
+                    {
+                        $(this).ShowAddRow($(e));
+                    }
+                }
+            $(document).on('click','#btnAdd',
+            function(e) {
+                e.preventDefault();
+                if ($("input[name=name]").val() === '' ||
+                    $("#cuisine option:selected").val() === '') {
+                    toastr.error("Please ensure Name and Cuisine are complete.", "Error");
+                    return;
+                }
+                 $newName = $("input[name=name]").val(),
+                 $newCuisine = $("#cuisine option:selected").val();
+                 BootstrapDialog.show({
+                    size: BootstrapDialog.SIZE_SMALL,
+                    //closable: false,
+                    type: BootstrapDialog.TYPE_DEFAULT,
+                    title: "Add New Item Confirmation",
+                    message: "Are you sure you wish to add a new Item?",
+
+                    buttons: [
+                        {
+                            label: "Confirm",
+                            cssClass: 'btn-primary',
+                            action: function(dialog) {
+                                dialog.close();
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '@Url.Action("AddNewRestaurant", "Home")',
+                    dataType: 'json',
+                    traditional: true,
+                    data: addAntiForgeryToken(
+                        {
+                            name: newName,
+                            cuisine: $newCuisine
+                        })
+
+                }).done(function (result) {
+                    if (result.success) {
+                       toastr.success(result.message, "Success");
+                    } else {
+                        toastr.error(result.message, "Error");
+                    }
+                    $("#restaurant-table").DataTable().destroy();
+                    loadTable();
+                });
+            }
+        },
+            {
+                label: "Cancel",
+                action: function (dialog) {
+                    dialog.close();
+                }
+            }
+        ]
+    });
+            });
+    // Click event to put row into edit mode - minus action column
+    $('#loot-table tbody').on('dblclick', 'td', function () {
+        try {
+            console.log('edit click');
+            settingsEditColumns = $(this).GetSettingsColumns();
+                // check for existing edit row controls, only showedit controls if these don't already exist
+                var $row = table.row($(this).parent('tr')).nodes().to$(),
+                    currentInput = $row.find('td:eq(settingsEditColumns[0]) input').length;
+                //contains is a external function in site.js
+                if (settingsEditColumns.contains(table.cell(this).index().columnVisible) && currentInput == 0) {
+                    var rowId = table.row(this).data().Id;
+                    var index = $.inArray(rowId, selected);
+                    if (index === -1) {
+                        selected.push(rowId);
+                    } else {
+                        selected.splice(index, 1);
+                    }
+                    $(this).ShowEditRow($(this).parent('tr'));
+                    $(this).parent('tr').addClass('selected');
+                    $.fn.DataTable.tables({ visible: true, api: true })
+                        .columns.adjust()
+                        .responsive.recalc();
+                }
+            }
+        catch (e) {console.log('errors - ' + e);
+            }
+    });
+            function UpdateSelectedRows(e) {
+                //console.log("update");
+                var selectedRestaurants = table.rows('.selected').data().toArray();
+                if (selectedRestaurants.length == 0)
+                {
+                    toastr.error("Updated data required");
+                    return;
+                }
+                $(this).updateEditableCells(e);
+                // case validation
+                //for (i = 0; i < selectedConfigs.length; i++) {
+                //    selectedConfigs[i].CONFIG_NAME.toUpperCase();
+                //    selectedConfigs[i].CONFIG_NAME_ABREV.toUpperCase();
+                //    selectedConfigs[i].CUSTOMER.toUpperCase();
+                //}
+                BootstrapDialog.show({
+                    size: BootstrapDialog.SIZE_SMALL,
+                    //closable: false,
+                    type: BootstrapDialog.TYPE_DANGER,
+                    title: "Save Confirmation",
+                    message: "Are you sure you wish to update ALL of the selected Rows?",
+                    buttons: [{
+                            label: "Confirm",
+                            cssClass: 'btn-primary',
+                            action: function (dialog) {
+                                dialog.close();
+                                //$(this).updateEditableCells(e);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '@Url.Action("UpdateSelectedRows", "Home")',
+                                    dataType: 'json',
+                                    traditional: true,
+                                    data: { selectedRestaurants: JSON.stringify(selectedRestaurants) }
+
+                                }).done(function (result) {
+                                    console.log('message' + result.message)
+                                    if (result.success) {
+                                        toastr.success(result.message, "Success");
+                                        $("#restaurant-table").DataTable().destroy();
+                                        selected = [];
+                                        loadTable();
+                                        $(this).UnselectAllRows($(e));
+                                    } else {
+                                        toastr.error(result.message, "Error");
+                                    }
+                                });
+                            }
+                        },
+                        {
+                            label: "Cancel",
+                            action: function (dialog) {
+                                //Remove editing controls
+                                $.each(table.rows('.selected').indexes(), function (index, element) {
+                                    var row = table.row(element).node();
+                                    $(this).UnselectRow(e);
+                                    //Remove class selected
+                                    $(e).removeClass('selected');
+                                    table.row(element).draw();
+                                });
+                                dialog.close();
+                            }
+                        }
+                    ]
+                });
+                };
+            function SaveAddRow(e) {
+            var test = $("input[name=cuisine]").val();
+            //console.log('input val: ' + test);
+                var $row = $(e).closest('tr'),
+                    $config = $("input[name=name]"),
+                    $configname = $("#cuisine option:selected");
+            if (typeof $config.val() !== "undefined") {
+                var newRow = {};
+                newRow["NAME"] = $config.val();
+                newRow["CUISINE"] = $configname.val();
+                BootstrapDialog.show({
+                    size: BootstrapDialog.SIZE_SMALL,
+                    //closable: false,
+                    type: BootstrapDialog.TYPE_DANGER,
+                    title: "Add Confirmation",
+                    message: "Are you sure you wish to add a new row?",
+
+                    buttons: [
+                        {
+                            label: "Confirm",
+                            cssClass: 'btn-primary',
+                            action: function(dialog) {
+                                dialog.close();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '@Url.Action("AddNewRestaurant", "Home")',
+                                    dataType: 'json',
+                                    traditional: true,
+                                    data: addAntiForgeryToken({ NewRow: JSON.stringify(newRow) })
+
+                                }).done(function(result) {
+                                    if (result.success) {
+                                        toastr.success(result.message, "Success");
+                                        $("#restaurant-table").DataTable().destroy();
+                                        selected = [];
+                                        loadTable();
+                                    } else {
+                                        toastr.error(result.message, "Error");
+                                    }
+                                });
+                            }
+                        },
+                        {
+                            label: "Cancel",
+                            action: function(dialog) {
+
+                                dialog.close();
+                            }
+                        }
+                    ]
+                });
+            } else {
+                toastr.error("Select Create New Row First.", "Error");
+            }
+        };
+        function DeleteSelectedRows() {
+            table.column(0).checkboxes.selected.length = 0;
+            var rows_selected = table.column(0).checkboxes.selected();
+            if (rows_selected.length === 0) {
+                toastr.error("Please select at least one checkbox.", "Error");
+                return;
+            };
+            var selected = [];
+            // Iterate over all selected checkboxes
+            $.each(rows_selected, function (index, rowId) {
+                selected.push(rowId);
+            });
+            BootstrapDialog.show({
+                size: BootstrapDialog.SIZE_SMALL,
+                type: BootstrapDialog.TYPE_DANGER,
+                title: "Delete Confirmation",
+                message: "Are you sure you wish to delete ALL of the selected Items?",
+                buttons: [{
+                        label: "Confirm",
+                        cssClass: 'btn-primary',
+                        action: function (dialog) {
+                            dialog.close();
+                            $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("DeleteSelectedItems", "Home")',
+                                dataType: 'json',
+                                traditional: true,
+                                data: addAntiForgeryToken({ selectedItems: selected })
+
+                            }).done(function (result) {
+                                if (result.success) {
+                                    toastr.success(result.message, "Success");
+                                } else {
+                                    toastr.error(result.message, "Error");
+                                }
+                                table.columns(0).checkboxes.deselectAll();
+                                table.ajax.reload();
+                            });
+                        }
+                    },
+                    {
+                        label: "Cancel",
+                        action: function (dialog) {
+                            dialog.close();
+                        }
+                    }
+                ]
+            });
+        }
+        </script>
+

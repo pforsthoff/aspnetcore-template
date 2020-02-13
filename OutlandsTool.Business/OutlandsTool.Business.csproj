@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OutlandsTool.Data\OutlandsTool.Data.csproj" />
+    <ProjectReference Include="..\OutlandsTool.ServiceModel\OutlandsTool.ServiceModel.csproj" />
+  </ItemGroup>
+
+</Project>

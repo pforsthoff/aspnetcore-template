@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - OutlandsTool.MVC</title>
+    @* ****************************    CSS    ******************************** *@
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/bundle.bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/toastr.min.css" />
+    @*<link rel="stylesheet" href="~/css/jquery-ui.css" />
+    <link rel="stylesheet" href="~/css/jquery.ui.dialog.css" />*@
+
+
+    @*<link rel="stylesheet" href="~/css/bundle.datatables.min.css" />
+        <link rel="stylesheet" href="~/css/bundle.jquery-ui.min.css" />*@
+    @*<link rel="stylesheet" href="~/css/datatables/datatables.min.css" />*@
+    @*<link rel="stylesheet" href="~/css/datatables/dataTables.checkboxes.css" />
+    <link rel="stylesheet" href="~/css/datatables/jquery.dataTables.yadcf.css" />
+    <link rel="stylesheet" href="~/css/datatables/buttons.dataTables.min.css" />
+    <link rel="stylesheet" href="~/css/datatables/select.dataTables.min.css" />*@
+
+    @* ****************************    SCRIPTS    ******************************** *@
+    <script type="text/javascript" src="~/js/jquery-1.12.4.js"></script>
+    @*<script type="text/javascript" src="~/js/bundle.jqueryui.min.js"></script>
+        <script type="text/javascript" src="~/js/bundle.datatables.min.js"></script>*@
+
+    <script src="~/js/bundle.site.min.js" asp-append-version="true"></script>
+    @*<script src="~/js/bundle.bootstrap.min.js" asp-append-version="true"></script>*@
+    <script src="~/js/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
+    @*<script src="~/js/datatables/dataTables.buttons.min.js" asp-append-version="true"></script>
+    <script src="~/js/datatables/dataTables.checkboxes.min.js" asp-append-version="true"></script>
+    <script src="~/js/datatables/dataTables.cellEdit.js" asp-append-version="true"></script>
+    <script src="~/js/datatables/jquery.dataTables.yadcf.js" asp-append-version="true"></script>
+    <script src="~/js/datatables/dataTables.select.min.js" asp-append-version="true"></script>
+    <script src="~/js/datatables/dataTables.order.neutral.js" asp-append-version="true"></script>*@
+
+    <script src="~/js/toastr.min.js"></script>
+    @*<script src="~/js/jquery-ui-1.11.3.js"></script>
+    <script src="~/js/jquery.ui-contextmenu.js"></script>*@
+   
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">OutlandsTool</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Grid">Grid</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Outlands Tool</p>
+        </footer>
+    </div>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+

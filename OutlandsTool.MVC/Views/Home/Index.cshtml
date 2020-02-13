@@ -1,0 +1,148 @@
+﻿@using OutlandsTool.MVC.ViewModels
+@using OutlandsTool.ServiceModel.Entities
+@model OutlandsTool.MVC.ViewModels.LootViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <div class="row">
+        <div class="text-center">
+            <h1 class="display-4"><img src="@Url.Content("~/img/uo_logo.jpg")" alt="IMAGES" />Outlands Loot Split</h1>
+        </div>
+                <div class="accordion-option">
+                    <a href="javascript:void(0)" class="toggle-accordion active" accordion-id="#accordion"></a>
+                </div>
+                <div class="clearfix">
+                </div>
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                                    <img src="@Url.Content("~/img/gold_link_grey.jpg")" alt="IMAGES" /> Loot Split
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                @using (Html.BeginForm("SubmitLootSplit", "Home", FormMethod.Post, new { id = "SubmitLootSplit"}))
+                                {
+                                <table sclass="table table-sm table-striped table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <td>
+                                                @Html.LabelFor(m => m.Loot_Split, new { @class = "control-label" })
+                                                @Html.DropDownListFor(m => m.SelectedLootSplitId, Model.LootSplitSelectList, "Make Selection", new { @id = "lootSplitDropdown", @class = "form-control input-xs", @style = "width:450px" })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Loot Item</th>
+                                            <th>Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    @for (int i = 0; i < Model.LootItems.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <img src="@Url.Content(String.Format("~/img/{0}", Model.LootItems[i].ImagePath))" alt="IMAGES" /><label>&nbsp;&nbsp;@Model.LootItems[i].Name</label>
+                                            </td>
+                                            <td>@Html.EditorFor(m => m.LootItems[i].Quantity, new { htmlAttributes = new { @id = Model.LootItems[i].LootItemId } })</td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td colspan="2">
+                                            @Html.TextBoxFor(a => a.Name, new { @id = "lootSplitName", @class = "form-control input-xs", @style = "width:250px; float: right;", @required = "required" })
+                                            @Html.LabelFor(m => m.Name, new { @class = "control-label", @style = "width:150px; float: right;" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <button id="btnsubmit" type="submit" class="btn btn-success" style="float: right;">Generate Loot Split Sheet</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</div>
+            <script>
+                // This is a bullshit way of displaying the lootitem quantity in the textboxes but I couldnt get the razor syntax to work
+                @foreach(LootItem lootItem in Model.LootItems)
+                {
+                    //@:console.log("updating controls" + @lootItem.LootItemId);
+                     @:$('#' + @lootItem.LootItemId).val(@lootItem.Quantity);
+                }
+
+        $(".toggle-accordion").on("click", function () {
+                    var accordionId = $(this).attr("accordion-id"),
+                numPanelOpen = $(accordionId + ' .collapse.in').length;
+
+            $(this).toggleClass("active");
+
+                    if (numPanelOpen == 0) {
+                        openAllPanels(accordionId);
+                    } else {
+                        closeAllPanels(accordionId);
+                    }
+                });
+
+        openAllPanels = function (aId) {
+            console.log("setAllPanelOpen");
+            $(aId + ' .panel-collapse:not(".in")').collapse('show');
+        };
+        closeAllPanels = function (aId) {
+            console.log("setAllPanelclose");
+            $(aId + ' .panel-collapse.in').collapse('hide');
+        };
+        @*function SubmitLootSplit() {
+        var lootData = '@Html.Raw(@Model)';
+   
+                BootstrapDialog.show({
+                    size: BootstrapDialog.SIZE_SMALL,
+                    //closable: false,
+                    type: BootstrapDialog.TYPE_DANGER,
+                    title: "Submit Confirmation",
+                    message: "Are you sure you wish to submit loot split?",
+                    buttons: [{
+                            label: "Confirm",
+                            cssClass: 'btn-primary',
+                            action: function (dialog) {
+                                dialog.close();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '@Url.Action("SubmitLootSplit", "Home")',
+                                    dataType: 'json',
+                                    traditional: true,
+                                    data: {
+                                        loot: JSON.stringify(lootData)
+                                    }
+
+                                }).done(function (result) {
+                                    console.log('message' + result.message)
+                                    if (result.success) {
+                                        toastr.success(result.message, "Success");
+
+                                    } else {
+                                        toastr.error(result.message, "Error");
+                                    }
+                                });
+                            }
+                        },
+                        {
+                            label: "Cancel",
+                            action: function (dialog) {
+                                dialog.close();
+                            }
+                        }
+                    ]
+                });
+        };*@
+                $("#lootSplitDropdown").change(function () {
+                    console.log("submitted");
+                    $("#SubmitLootSplit").submit();
+
+            
+        });
+            </script>

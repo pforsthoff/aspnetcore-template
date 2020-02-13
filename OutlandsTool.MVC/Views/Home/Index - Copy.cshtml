@@ -1,0 +1,360 @@
+﻿@using OutlandsTool.MVC.ViewModels
+@using OutlandsTool.ServiceModel.Entities
+@model OutlandsTool.MVC.ViewModels.LootViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <div class="row">
+        <div class="text-center">
+            <h1 class="display-4"><img src="@Url.Content("~/img/uo_logo.jpg")" alt="IMAGES" />Outlands Loot Split</h1>
+        </div>
+        <div class="form-group col-lg-2">
+            @Html.LabelFor(m => m.Loot_Split, new { @class = "control-label", @for = "modelFilterLabel" })
+            <div>
+                @Html.DropDownListFor(m => m.LootSplitSelectList, Model.LootSplitSelectList, "Make Selection", new { @id = "lootSplitDropdown", @class = "form-control input-xs", @style = "width:150px" })
+            </div>
+        </div>
+        <div class="accordion-option">
+            <a href="javascript:void(0)" class="toggle-accordion active" accordion-id="#accordion"></a>
+        </div>
+        <div class="clearfix"></div>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingFour">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                            <img src="@Url.Content("~/img/gold_link_grey.jpg")" alt="IMAGES" /> Mastery Chain Links
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Mastery Chain Links</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (LootItem item in Model.LootItems.Where(a => a.Type == "Link"))
+                                {
+                                    <tr>
+                                        <td>
+                                            <img src="@Url.Content(String.Format("~/img/{0}", item.ImagePath))" alt="IMAGES" /><label>@item.Name</label>
+                                        </td>
+                                        <td><input id='@(item.Name)' name="@(item.LootItemId)" type="number" value="0" min="0" max="100" step="1" /></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <img src="@Url.Content("~/img/skillball_grey.jpg")" alt="IMAGES" /> Special Loot
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Special Loot</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (LootItem item in Model.LootItems.Where(a => a.Type == "SkillBall" || a.Type == "Mcd" || a.Type == "Tmap"))
+                                {
+                                <tr>
+                                    <td>
+                                        <img src="@Url.Content(String.Format("~/img/{0}", item.ImagePath))" alt="IMAGES" /><label>@item.Name</label>
+                                    </td>
+                                    @*<td><input id='@(item.Name)' name="@(item.Id)" type="number" value="0" min="0" max="100" step="1" /></td>*@
+                                <td>@Html.EditorFor(m => item.LootItemId, new { @id = item.Name })</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            <img src="@Url.Content("~/img/command_core_grey.jpg")" alt="IMAGES" /> Aspect Cores / Extracts
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+
+                        {
+                            <table style="float: left;">
+                                <thead>
+                                    <tr>
+                                        <th>Aspect Cores</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*@foreach (LootItem item in Model.Cores)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <img src="@Url.Content(String.Format("~/img/{0}", item.ImagePath))" alt="IMAGES" /><label>@item.Name</label>
+                                            </td>
+                                            <td>@Html.EditorFor(m => item.Id, new { @id = item.Name })</td>
+                                        </tr>
+                                    }*@
+                                </tbody>
+                            </table>
+                        }
+                            <table style="float: left;">
+                                <thead>
+                                    <tr>
+                                        <th>Aspect Extracts</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*@foreach (LootItem item in Model.Extracts)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <img src="@Url.Content(String.Format("~/img/{0}", item.ImagePath))" alt="IMAGES" /><label>@item.Name</label>
+                                            </td>
+                                            <td>@Html.EditorFor(m => item.Id, new { @id = item.Name })</td>
+                                        </tr>
+                                    }*@
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingThree">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                            <img src="@Url.Content("~/img/skillscroll_grey.jpg")" alt="IMAGES" /> Skill Scrolls
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                    <div class="panel-body">
+                        <table class="table table-sm" style="float: left;">
+                            <thead>
+                                <tr>
+                                    <th>Skill Scrolls</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (LootItem scroll in Model.LootItems.Where(a => a.Type == "SkillScroll"))
+                                {
+                                <tr>
+                                    <td>
+                                        <img src="@Url.Content(String.Format("~/img/{0}", scroll.ImagePath))" alt="IMAGES" /><label>@scroll.Name</label>
+                                    </td>
+                                    <td>@Html.EditorFor(m => scroll.LootItemId, new { @id = scroll.Name })</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="row">
+    <button id="btnsubmit" type="button" class="btn btn-success" style="float: right;">Generate Loot Split Sheet</button>
+</div>
+<div class="row">
+
+</div>
+    <script>
+        $("#btnsubmit").on("click", function () {
+            console.log("submit");
+            SubmitLootSplit();
+    });
+        $(".toggle-accordion").on("click", function () {
+            var accordionId = $(this).attr("accordion-id"),
+                numPanelOpen = $(accordionId + ' .collapse.in').length;
+
+            $(this).toggleClass("active");
+
+            if (numPanelOpen == 0) {
+                openAllPanels(accordionId);
+            } else {
+                closeAllPanels(accordionId);
+            }
+        });
+
+        openAllPanels = function (aId) {
+            console.log("setAllPanelOpen");
+            $(aId + ' .panel-collapse:not(".in")').collapse('show');
+        };
+        closeAllPanels = function (aId) {
+            console.log("setAllPanelclose");
+            $(aId + ' .panel-collapse.in').collapse('hide');
+        };
+        function SubmitLootSplit() {
+        var lootData = '@Html.Raw(@Model)';
+    //var lootData = {bronzelink: $('#BronzeLink').val(), silverlink: $('#SilverLink').val(), goldlink: $('#GoldLink').val(),
+    //skillball: $('#SkillBall').val(), mcd: $('#Mcd').val(), tmap1: $('#Tmap1').val(), tmap2: $('#Tmap2').val(),
+    //tmap3: $('#Tmap3').val(), tmap4: $('#Tmap4').val(), tmap5: $('#Tmap5').val(), tmap6: $('#Tmap6').val(), 
+    //aircore: $('#AirCore').val(), artisancore: $('#ArtisanCore').val(), bloodcore: $('#BloodCore').val(), 
+    //commandcore: $('#CommandCore').val(), earthcore: $('#EarthCore').val(), eldrichcore: $('#EldrichCore').val(), 
+    //firecore: $('#FireCore').val(), fortunecore: $('#FortuneCore').val(), lyriccore: $('#LyricCore').val(), 
+    //poisoncore: $('#PoisonCore').val(), shadowcore: $('#ShadowCore').val(), voidcore: $('#VoidCore').val(), watercore: $('#WaterCore').val(),
+    //airextract: $('#AirExtract').val(),artisanextract: $('#ArtisanExtract').val(), bloodextract: $('#BloodExtract').val(),
+    //commandextract: $('#CommandExtract').val(),earthextract: $('#EarthExtract').val(), eldrichextract: $('#EldrichExtract').val(), 
+    //fireextract: $('#FireExtract').val(), fortuneextract: $('#FortuneExtract').val(), lyricextract: $('#LyricExtract').val(), 
+    //poisonextract: $('#PoisonExtract').val(), shadowextract: $('#ShadowExtract').val(), voidextract: $('#VoidExtract').val(), waterextract: $('#WaterExtract').val(),
+    //Alchemy:$('#Alchemy').val(), AnimalLore:$('#AnimalLore').val(), AnimalTaming:$('#AnimalTaming').val(), ArmsLore:$('#ArmsLore').val(),
+    //Begging:$('#Begging').val(), Blacksmith:$('#Blacksmith').val(), Camping:$('#Camping').val(), Carpentry:$('#Carpentry').val(),
+    //Cartography:$('#Cartography').val(), Cooking:$('#Cooking').val(), DetectHiding:$('#DetectHiding').val(), Discordance:$('#Discordance').val(),
+    //Fishing:$('#Fishing').val(), ForensicEval:$('#ForensicEval').val(), Herding:$('#Herding').val(), Inscription:$('#Inscription').val(),
+    //ItemID:$('#ItemID').val(), Lockpicking:$('#Lockpicking').val(), Lumberjacking:$('#Lumberjacking').val(), Musicianship:$('#Musicianship').val(),
+    //Mining:$('#Mining').val(), Peacemaking:$('#Peacemaking').val(), Poisoning:$('#Poisoning').val(), Provocation:$('#Provocation').val(),
+    //RemoveTrap:$('#RemoveTrap').val(), SpiritSpeak:$('#SpiritSpeak').val(), Stealth:$('#Stealth').val(), Tailoring:$('#Tailoring').val(),
+    //TasteID: $('#TasteID').val(), Tinkering: $('#Tinkering').val(), Tracking: $('#Tracking').val(), Veterinary: $('#Veterinary').val(), Date: new Date(2018, 11, 24, 10, 33, 30)
+
+    //}
+       
+                BootstrapDialog.show({
+                    size: BootstrapDialog.SIZE_SMALL,
+                    //closable: false,
+                    type: BootstrapDialog.TYPE_DANGER,
+                    title: "Submit Confirmation",
+                    message: "Are you sure you wish to submit loot split?",
+                    buttons: [{
+                            label: "Confirm",
+                            cssClass: 'btn-primary',
+                            action: function (dialog) {
+                                dialog.close();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '@Url.Action("SubmitLootSplit", "Home")',
+                                    dataType: 'json',
+                                    traditional: true,
+                                    data: {
+                                        loot: JSON.stringify(lootData)
+                                    }
+
+                                }).done(function (result) {
+                                    console.log('message' + result.message)
+                                    if (result.success) {
+                                        toastr.success(result.message, "Success");
+
+                                    } else {
+                                        toastr.error(result.message, "Error");
+                                    }
+                                });
+                            }
+                        },
+                        {
+                            label: "Cancel",
+                            action: function (dialog) {
+                                dialog.close();
+                            }
+                        }
+                    ]
+                });
+        };
+        $("#lootSplitDropdown").change(function () {
+             var t = $(this).val();
+
+            if (t !== "") {               
+                $.post("@Url.Action("GetLootSplit", "Home")?val=" + t, function(res) {
+                    if (res.success === "true") {
+
+                        $('#BronzeLink').val(res.lootsplit.bronzeLink);
+                        $('#SilverLink').val(res.lootsplit.silverLink);
+                        $('#GoldLink').val(res.lootsplit.goldLink);
+                        $('#SkillBall').val(res.lootsplit.skillBall);
+                        $('#Mcd').val(res.lootsplit.mcd);
+                        $('#Tmap1').val(res.lootsplit.tmap1);
+                        $('#Tmap2').val(res.lootsplit.tmap2);
+                        $('#Tmap3').val(res.lootsplit.tmap3);
+                        $('#Tmap4').val(res.lootsplit.tmap4);
+                        $('#Tmap5').val(res.lootsplit.tmap5);
+                        $('#Tmap6').val(res.lootsplit.tmap6);
+                        $('#AirCore').val(res.lootsplit.airCore);
+                        $('#ArtisanCore').val(res.lootsplit.artisanCore);
+                        $('#BloodCore').val(res.lootsplit.bloodCore);
+                        $('#CommandCore').val(res.lootsplit.commandCore);
+                        $('#EarthCore').val(res.lootsplit.earthCore);
+                        $('#EldrichCore').val(res.lootsplit.eldrichCore);
+                        $('#FireCore').val(res.lootsplit.fireCore);
+                        $('#FortuneCore').val(res.lootsplit.fortuneCore);
+                        $('#LyricCore').val(res.lootsplit.lyricCore);
+                        $('#PoisonCore').val(res.lootsplit.poisonCore);
+                        $('#ShadowCore').val(res.lootsplit.shadowCore);
+                        $('#VoidCore').val(res.lootsplit.voidCore);
+                        $('#WaterCore').val(res.lootsplit.waterCore);
+                        $('#AirExtract').val(res.lootsplit.airExtract);
+                        $('#ArtisanExtract').val(res.lootsplit.artisanExtract);
+                        $('#BloodExtract').val(res.lootsplit.bloodExtract);
+                        $('#CommandExtract').val(res.lootsplit.commandExtract);
+                        $('#EarthExtract').val(res.lootsplit.earthExtract);
+                        $('#EldrichExtract').val(res.lootsplit.eldrichExtract);
+                        $('#FireExtract').val(res.lootsplit.fireExtract);
+                        $('#FortuneExtract').val(res.lootsplit.fortuneExtract);
+                        $('#LyricExtract').val(res.lootsplit.lyricExtract);
+                        $('#PoisonExtract').val(res.lootsplit.poisonExtract);
+                        $('#ShadowExtract').val(res.lootsplit.shadowExtract);
+                        $('#VoidExtract').val(res.lootsplit.voidExtract);
+                        $('#WaterExtract').val(res.lootsplit.waterExtract);
+                        $('#Alchemy').val(res.lootsplit.alchemy);
+                        $('#AnimalLore').val(res.lootsplit.animalLore);
+                        $('#AnimalTaming').val(res.lootsplit.animalTaming);
+                        $('#ArmsLore').val(res.lootsplit.armsLore);
+                        $('#Begging').val(res.lootsplit.begging);
+                        $('#Blacksmith').val(res.lootsplit.blacksmith);
+                        $('#Camping').val(res.lootsplit.camping);
+                        $('#Carpentry').val(res.lootsplit.carpentry);
+                        $('#Cartography').val(res.lootsplit.cartography);
+                        $('#Cooking').val(res.lootsplit.cooking);
+                        $('#DetectHiding').val(res.lootsplit.detectHiding);
+                        $('#Discordance').val(res.lootsplit.discordance);
+                        $('#Fishing').val(res.lootsplit.fishing);
+                        $('#ForensicEval').val(res.lootsplit.forensicEval);
+                        $('#Herding').val(res.lootsplit.herding);
+                        $('#Inscription').val(res.lootsplit.inscription);
+                        $('#ItemID').val(res.lootsplit.itemID);
+                        $('#Lockpicking').val(res.lootsplit.lockpicking);
+                        $('#Lumberjacking').val(res.lootsplit.lumberjacking);
+                        $('#Musicianship').val(res.lootsplit.musicianship);
+                        $('#Mining').val(res.lootsplit.mining);
+                        $('#Peacemaking').val(res.lootsplit.peacemaking);
+                        $('#Poisoning').val(res.lootsplit.poisoning);
+                        $('#Provocation').val(res.lootsplit.provocation);
+                        $('#RemoveTrap').val(res.lootsplit.removeTrap);
+                        $('#SpiritSpeak').val(res.lootsplit.spiritSpeak);
+                        $('#Stealth').val(res.lootsplit.stealth);
+                        $('#Tailoring').val(res.lootsplit.tailoring);
+                        $('#TasteID').val(res.lootsplit.tasteID);
+                        $('#Tinkering').val(res.lootsplit.tinkering);
+                        $('#Tracking').val(res.lootsplit.tracking);
+                        $('#Veterinary').val(res.lootsplit.veterinary);
+
+
+                    } else {
+                        alert("Error getting datas!");
+                    }
+                });
+            } else {
+                //Let's clear the values and disable :)
+                $("input.editableItems").val('').prop('disabled', true);
+            }
+        });
+    </script>

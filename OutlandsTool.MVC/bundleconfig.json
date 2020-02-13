@@ -1,0 +1,76 @@
+[
+  {
+    "outputFileName": "wwwroot/css/bundle.bootstrap.min.css",
+    "inputFiles": [
+      "wwwroot/css/bootstrap.css",
+      "wwwroot/css/bootstrap-dialog.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/bundle.jquery-ui.min.css",
+    "inputFiles": [
+      "wwwroot/css/jquery-ui.css",
+      "wwwroot/css/jquery.ui.dialog.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/bundle.datatables.min.css",
+    "inputFiles": [
+      "wwwroot/css/datatables.min.css",
+      "wwwroot/css/datatables/dataTables.checkboxes.css",
+      "wwwroot/css/datatables/jquery.dataTables.yadcf.css",
+      "wwwroot/css/datatables/buttons.dataTables.min.css",
+      "wwwroot/css/datatables/select.dataTables.min.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/toastr.min.css",
+    "inputFiles": [
+      "wwwroot/css/toastr.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/bundle.jqueryui.min.js",
+    "inputFiles": [
+      "wwwroot/js/jquery-ui-1.11.3.js",
+      "wwwroot/js/jquery.ui-contextmenu.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/toastr.min.js",
+    "inputFiles": [
+      "wwwroot/js/toastr.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/bundle.datatables.min.js",
+    "inputFiles": [
+      "wwwroot/js/datatables/jquery.dataTables.min.js",
+      "wwwroot/js/datatables/dataTables.buttons.min.js",
+      "wwwroot/js/datatables/dataTables.checkboxes.min.js",
+      "wwwroot/js/datatables/dataTables.cellEdit.js",
+      "wwwroot/js/datatables/jquery.dataTables.yadcf.js",
+      "wwwroot/js/datatables/dataTables.select.min.js",
+      "wwwroot/js/datatables/dataTables.order.neutral.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/bundle.site.min.js",
+    "inputFiles": [
+      "wwwroot/js/site.js"
+
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/bundle.bootstrap.min.js",
+    "inputFiles": [
+      "wwwroot/js/bootstrap.js",
+      "wwwroot/js/bootstrap-dialog.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  }
+]
