@@ -51,6 +51,7 @@
       "wwwroot/js/datatables/dataTables.cellEdit.js",
       "wwwroot/js/datatables/jquery.dataTables.yadcf.js",
       "wwwroot/js/datatables/dataTables.select.min.js",
+      "wwwroot/js/datatables/dataTables.rowgroup.js",
       "wwwroot/js/datatables/dataTables.order.neutral.js"
     ]
   },

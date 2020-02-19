@@ -42,6 +42,8 @@ namespace OutlandsTool.MVC.Controllers
             var model = new LootViewModel();
             var lootItems = _lootManager.GetAllLootItems();
             model.LootItems = lootItems.ToList();
+            model.LootSplitSelectList = new SelectList(_lootManager.GetLootSplitDropdownValues(),
+              "LootSplitId", "Name");
             return View(model);
         }
 

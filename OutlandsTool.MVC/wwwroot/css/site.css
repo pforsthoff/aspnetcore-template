@@ -294,9 +294,25 @@ table.dataTable tr.group td {
     direction: ltr;
     padding: 2px 3px 2px 3px;
 }
+
 div.dataTables_wrapper div.dataTables_processing {
     top: 0;
 }
 .dataTables_filter {
+    float: right !important;
+}
+.sign:after {
+    content: " - ";
+    float: left;
+}
+.collapsed .sign:after {
+    content: " + ";
+    float: left;
+}
+.collapsed .sign:after {
+    content: " + ";
+    float: left;
+}
+#lootSplitDropdown {
     float: right !important;
 }
