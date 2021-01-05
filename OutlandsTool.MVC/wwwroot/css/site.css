@@ -245,7 +245,7 @@ td.link {
     border-bottom: 3px SOLID #000000;
     border-right: 1px SOLID #000000;
     background-color: #ff0000;
-    text-align: center;
+    text-align: left;
     font-weight: bold;
     color: #ffffff;
     font-family: 'Arial';
@@ -266,7 +266,33 @@ td {
     direction: ltr;
 }
 
-th.row-headers-background {
+th.sorting {
+    border-bottom: 3px SOLID #000000;
+    background-color: #434343;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: 'Arial';
+    font-size: 10pt;
+    vertical-align: bottom;
+    white-space: nowrap;
+    direction: ltr;
+    padding: 2px 3px 2px 3px;
+}
+th.sorting_asc {
+    border-bottom: 3px SOLID #000000;
+    background-color: #434343;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: 'Arial';
+    font-size: 10pt;
+    vertical-align: bottom;
+    white-space: nowrap;
+    direction: ltr;
+    padding: 2px 3px 2px 3px;
+}
+th.sorting_desc {
     border-bottom: 3px SOLID #000000;
     background-color: #434343;
     text-align: center;
@@ -284,7 +310,7 @@ table.dataTable tr.group td {
     font-weight: bold;
     border-bottom: 3px SOLID #000000;
     background-color: #434343;
-    text-align: center;
+    text-align: left;
     font-weight: bold;
     color: #ffffff;
     font-family: 'Arial';

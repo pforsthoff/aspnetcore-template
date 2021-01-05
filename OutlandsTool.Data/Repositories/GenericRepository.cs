@@ -207,6 +207,16 @@ namespace OutlandsTool.Data.Repositories
             _context.SaveChanges();
             return entity;
         }
+        public T InsertOrUpdate<T>(T entity) where T : class
+        {
+            if (_context.Entry(entity).State == EntityState.Detached)
+                _context.Set<T>().Add(entity);
+
+            // If an immediate save is needed, can be slow though
+            // if iterating through many entities:
+            _context.SaveChanges();
+            return entity;
+        }
         public async Task<T> InsertAsync(T entity)
         {
             await _context.Set<T>().AddAsync(entity);

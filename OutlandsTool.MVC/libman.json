@@ -10,6 +10,14 @@
         "jquery.min.map"
       ],
       "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "twitter-bootstrap@3.4.1",
+      "destination": "wwwroot/lib/bootstrap/"
+    },
+    {
+      "library": "datatables@1.10.19",
+      "destination": "wwwroot/lib/datatables/"
     }
   ]
 }

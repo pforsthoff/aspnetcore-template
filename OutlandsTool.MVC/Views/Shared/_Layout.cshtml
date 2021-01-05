@@ -1,77 +1,101 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] - OutlandsTool.MVC</title>
-    @* ****************************    CSS    ******************************** *@
+    @*****************************    CSS    ******************************** *@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/bundle.bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/toastr.min.css" />
     <link rel="stylesheet" href="~/css/font-awesome.css" />
-    @*<link rel="stylesheet" href="~/css/jquery-ui.css" />
-        <link rel="stylesheet" href="~/css/jquery.ui.dialog.css" />*@
-
-
     <link rel="stylesheet" href="~/css/bundle.datatables.min.css" />
     <link rel="stylesheet" href="~/css/bundle.jquery-ui.min.css" />
-    @*<link rel="stylesheet" href="~/css/datatables/datatables.min.css" />*@
-    @*<link rel="stylesheet" href="~/css/datatables/dataTables.checkboxes.css" />
-        <link rel="stylesheet" href="~/css/datatables/jquery.dataTables.yadcf.css" />*@
-    @*<link rel="stylesheet" href="~/css/datatables/buttons.dataTables.min.css" />*@
-    @*<link rel="stylesheet" href="~/css/datatables/select.dataTables.min.css" />*@
+    <link rel="stylesheet" href="~/css/datatables/jquery.dataTables.yadcf.css" />
 
-    @* ****************************    SCRIPTS    ******************************** *@
+     @*****************************    SCRIPTS    *********************************@ 
     <script type="text/javascript" src="~/js/jquery-1.12.4.js"></script>
     <script type="text/javascript" src="~/js/bundle.jqueryui.min.js"></script>
     <script type="text/javascript" src="~/js/bundle.site.min.js" asp-append-version="true"></script>
     <script type="text/javascript" src="~/js/bundle.bootstrap.min.js" asp-append-version="true"></script>
     <script type="text/javascript" src="~/js/bundle.datatables.min.js"></script>
-
-    @*<script src="~/js/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
-        <script src="~/js/datatables/dataTables.buttons.min.js" asp-append-version="true"></script>
-        <script src="~/js/datatables/dataTables.checkboxes.min.js" asp-append-version="true"></script>
-        <script src="~/js/datatables/dataTables.cellEdit.js" asp-append-version="true"></script>
-        <script src="~/js/datatables/dataTables.rowgroup.js" asp-append-version="true"></script>
-        <script src="~/js/datatables/jquery.dataTables.yadcf.js" asp-append-version="true"></script>
-        <script src="~/js/datatables/dataTables.select.min.js" asp-append-version="true"></script>
-        <script src="~/js/datatables/dataTables.order.neutral.js" asp-append-version="true"></script>*@
-
     <script src="~/js/toastr.min.js"></script>
-    @*<script src="~/js/jquery-ui-1.11.3.js"></script>
-        <script src="~/js/jquery.ui-contextmenu.js"></script>*@
+  
 
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">OutlandsTool</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Grid">Grid</a>
+<body class="bootstrap-admin-with-small-navbar">
+
+    <!-- main / large navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="row">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".main-navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">UO Outlands Tool</a>
+                </div>
+                <div class="collapse navbar-collapse main-navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Link</a></li>
+                        <li><a href="#">Link</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-hover="dropdown">Dropdown <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li role="presentation" class="dropdown-header">Dropdown header</li>
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation" class="dropdown-header">Dropdown header</li>
+                                <li><a href="#">Separated link</a></li>
+                                <li><a href="#">One more separated link</a></li>
+                            </ul>
                         </li>
                     </ul>
-                </div>
+                    <div class="collapse navbar-collapse bootstrap-admin-navbar-sm">
+                        <ul class="nav navbar-nav navbar-right ">
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Grid">Grid</a></li>
+                            <li><a href="#">Link</a></li>
+                            <li>
+                                <a href="#">Reminders <i class="glyphicon glyphicon-bell"></i></a>
+                            </li>
+                            <li>
+                                <a href="#">Settings <i class="glyphicon glyphicon-cog"></i></a>
+                            </li>
+                            <li>
+                                <a href="#">Go to frontend <i class="glyphicon glyphicon-share-alt"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div><!-- /.navbar-collapse -->
             </div>
-        </nav>
-    </header>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Outlands Tool</p>
-        </footer>
-    </div>
-    @RenderSection("Scripts", required: false)
+        </div><!-- /.container -->
+    </nav>
+        <div class="container body-content">
+            @RenderBody()
+        </div>
+        <div class="row">
+            <hr>
+            <footer role="contentinfo">
+                <p>&copy;  @DateTime.Now.Year -  <a href="https://github.com/jrocket" target="_blank">UO Outlands Tool</a></p>
+            </footer>
+        </div>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-45396411-1', 'azurewebsites.net');
+        ga('send', 'pageview');
+
+    </script>
 </body>
 </html>
-

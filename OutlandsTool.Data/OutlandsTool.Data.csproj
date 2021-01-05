@@ -16,8 +16,4 @@
     <ProjectReference Include="..\OutlandsTool.ServiceModel\OutlandsTool.ServiceModel.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Mappings\" />
-  </ItemGroup>
-
 </Project>

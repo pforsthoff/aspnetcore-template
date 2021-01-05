@@ -85,9 +85,29 @@ namespace OutlandsTool.Business.Managers
             catch (Exception ex)
             {
                 result.Success = false;
-                result.Message = "Error adding config. " + ex.Message;
+                result.Message = "Error adding loot split. " + ex.Message;
             }
             return lootSplit;
+        }
+        public SplitItem InsertOrUpdateSplitItem(SplitItem splitItem)
+        {
+            var result = new JsonResultMessage()
+            {
+                Success = true,
+                Message = "Successfully processed split item"
+            };
+
+            try
+            {
+                splitItem = _unitOfWork.Repository<SplitItem>().InsertOrUpdate(splitItem);
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = "Error adding/updating split item. " + ex.Message;
+            }
+            return splitItem;
         }
         public JsonResultMessage InsertSplitItems(List<SplitItem> splitItems, int lootSplitId)
         {

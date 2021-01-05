@@ -20,6 +20,7 @@ namespace OutlandsTool.ServiceModel.Business
         LootItem GetLootItemByName(string lootItemName);
         LootSplit InsertLootSplit(LootSplit lootsplit);
         IEnumerable<SplitItem> GetSplitItems(int? Id);
+        SplitItem InsertOrUpdateSplitItem(SplitItem splitItem);
         //LootSplit GetLootSplit(string lootSplitName);
         //Task<JsonResultMessage> AddNewRestaurantAsync(Restaurant restaurant);
         //Task<Restaurant> UpdateAsync(Restaurant restaurantChanges);

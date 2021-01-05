@@ -70,12 +70,16 @@ namespace OutlandsTool.MVC.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
      
-        public ActionResult SubmitLootSplit(LootViewModel model, string lootSplitName)
+        public ActionResult SubmitLootSplit(LootViewModel model)
         {
+            model.LootSplitSelectList = new SelectList(_lootManager.GetLootSplitDropdownValues(),
+          "LootSplitId", "Name");
+            model.LootItems = _lootManager.GetAllLootItems().ToList();
+
             var resultMessage = ResultMessages.JsonResultMessage();
             resultMessage.Message = "Successfully Submitted Loot Split.";
             resultMessage.Success = true;
-            //save
+            //new loot split
             if (model.SelectedLootSplitId == 0)
             {
                 try
@@ -86,7 +90,7 @@ namespace OutlandsTool.MVC.Controllers
                     LootSplit lootSplit = new LootSplit();
                     lootSplit.Name = model.Name;
                     List<SplitItem> splitItems = new List<SplitItem>();
-
+                    int itemCount = 0;
                     foreach (LootItem lootitem in model.LootItems)
                     {
                         if (lootitem.Quantity > 0)
@@ -96,18 +100,27 @@ namespace OutlandsTool.MVC.Controllers
                             splitItem.LootItemId = lootitem.LootItemId;
                             splitItem.LootItemQuantity = lootitem.Quantity;
                             splitItems.Add(splitItem);
+                            itemCount++;
                         }
                     }
-
-                    lootSplit.SplitItems = splitItems;
-                    lootSplit = _lootManager.InsertLootSplit(lootSplit);
+                    if(itemCount >0)
+                    {
+                        lootSplit.SplitItems = splitItems;
+                        lootSplit = _lootManager.InsertLootSplit(lootSplit);
+                    }
+                    else
+                    {
+                        model.resultSuccess = false;
+                        model.resultMessage = "No items added to loot split!";
+                        return View("Grid", model);
+                    }
 
                     //_lootManager.InsertSplitItems(splitItems, lootSplit.Id);
                     if (failures > 0)
                     {
-                        resultMessage.Success = false;
-                        resultMessage.Message = "Insert Failed ";
-                        return Json(resultMessage);
+                        model.resultSuccess = false;
+                        model.resultMessage = "Insert Failed ";
+                        return View("Grid", model);
                     }
                     resultMessage.Success = true;
                     resultMessage.Message = "Inserted {0} Loot Splits(s).".FormatWith(successes);
@@ -118,32 +131,22 @@ namespace OutlandsTool.MVC.Controllers
                     resultMessage.Message = "Error Inserting Loot Split. " + ex.Message;
                 }
             }
-            //load
+            //update existing loot split
             else
             {
-                model.LootSplitSelectList = new SelectList(_lootManager.GetLootSplitDropdownValues(),
-             "LootSplitId", "Name");
-                model.LootItems = _lootManager.GetAllLootItems().ToList();
-                IEnumerable<SplitItem> splitItems = _lootManager.GetSplitItems(model.SelectedLootSplitId);
+                LootSplit lootSplit = _lootManager.GetLootSplit(model.SelectedLootSplitId);
                 foreach (LootItem lootItem in model.LootItems)
                 {
-                    foreach (SplitItem splitItem in splitItems)
+                    foreach (SplitItem splitItem in lootSplit.SplitItems)
                     {
                         if (splitItem.LootItemId == lootItem.LootItemId)
                         {
-                            lootItem.Quantity = splitItem.LootItemQuantity;
+                            _lootManager.InsertOrUpdateSplitItem(splitItem);
                         }
                     }
                 }
-                foreach (SelectListItem item in model.LootSplitSelectList)
-                {
-                    if (item.Value == model.SelectedLootSplitId.ToString())
-                    {
-                        item.Selected = true;
-                    }
-                }
             }
-                return View("Index", model);
+                return View("Grid", model);
         }
         //[HttpPost]
         //public ActionResult GetLootSplit(int? id)
@@ -173,7 +176,7 @@ namespace OutlandsTool.MVC.Controllers
         [HttpPost]
         public JsonResult AjaxLoot(string lootSplitId)
         {
-            if (lootSplitId == "")
+            if (lootSplitId == "" || lootSplitId == null)
             {
                 lootSplitId = "0";
             }
@@ -200,12 +203,21 @@ namespace OutlandsTool.MVC.Controllers
             int skip = start != null ? Convert.ToInt32(start) : 0;
 
             int recordsTotal = 0;
-
             IEnumerable<LootItem> lootItems = _lootManager.GetAllLootItems();
-            // getting all Customer data  
-            if (lootSplitId == "0")
-            {
 
+            if (lootSplitId != "0")
+            {
+                LootSplit lootSplit = _lootManager.GetLootSplit(int.Parse(lootSplitId));
+                foreach (LootItem lootItem in lootItems)
+                {
+                    foreach (SplitItem splitItem in lootSplit.SplitItems)
+                    {
+                        if(splitItem.LootItemId == lootItem.LootItemId)
+                        {
+                            lootItem.Quantity = splitItem.LootItemQuantity;
+                        }
+                    }
+                }
             }
 
             //Search    
@@ -221,11 +233,10 @@ namespace OutlandsTool.MVC.Controllers
             //total number of rows counts   
             recordsTotal = lootItems.Count();
             //Paging   
-            //var mappedResults = _mapper.Map<IEnumerable<LootItem>, ICollection<LootViewModel>>(lootItems);
-
+            var mappedResults = _mapper.Map<IEnumerable<LootItem>, ICollection<LootViewModel>>(lootItems);
  
              //var data = lootItems.Skip(skip).Take(pageSize).ToList();
-            var data = lootItems;
+            var data = mappedResults;
 
             //Returning Json Data  
 

@@ -4,74 +4,71 @@
 @{
     ViewData["Title"] = "Grid";
 }
-
+<div class="col-lg-10">
+    &nbsp;
     <div class="row">
-        <div class="text-center">
-            <h1 class="display-4"><img src="@Url.Content("~/img/uo_logo.jpg")" alt="IMAGES" />Outlands Loot Split</h1>
-        </div>
-        <div>
-          
-            <hr />
-        </div>
-        <div>
-            @using (Html.BeginForm("SubmitLootSplit", "Home", FormMethod.Post, new { id = "SubmitLootSplit" }))
-            {
-                <table id="loot-table" class="table table-sm table-condensed" cellspacing="0" cellpadding="0" >
-                    <thead>
-                        <tr>
-                            <td>
-                                <button id="btnRoll" type="submit" class="btn btn-success">Roll</button>
-                            </td>
-                            <td></td>
-                            <td>
-                                <button id="btnClear" type="submit" class="btn btn-danger">Clear</button>
-                            </td>
-                            <td>
-                                <button id="btnToggle" type="submit" class="btn btn-primary">Toggle Lock</button>
-                            </td>
-                            <td></td>
-                            <td>
-                                <button id="btnSave" type="submit" class="btn btn-success" style="float: right;">Save Loot Split</button>
-                            </td>
-                        </tr>
-                        <tr >
-                            <td colspan="16">
-                                @Html.LabelFor(m => m.Loot_Split, new { @class = "control-label" })
-                                @Html.DropDownListFor(m => m.SelectedLootSplitId, Model.LootSplitSelectList, "Make Selection", new { @id = "lootSplitDropdown", @class = "form-control input-xs", @style = "width:150px ", onchange = @"form.submit();" })
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="row-headers-background">@Html.Label("Type", "Type", new { @class = "dataTable-head-column" })</th>
-                            <th class="row-headers-background">@Html.Label("ImagePath", "ImagePath", new { @class = "dataTable-head-column" })</th>
-                            <th class="row-headers-background">@Html.Label("", "", new { @class = "dataTable-head-column" })</th>
-                            <th class="row-headers-background">@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
-                            <th class="row-headers-background">@Html.Label("Price", "Price", new { @class = "dataTable-head-column" })</th>
-                            <th class="row-headers-background">@Html.Label("Quantity", "Quantity", new { @class = "dataTable-head-column" })</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                            <th class="row-headers-background dataTable-head-column">Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (int i = 0; i < Model.LootItems.Count; i++)
-                        {
+        @using (Html.BeginForm("SubmitLootSplit", "Home", FormMethod.Post, new { id = "SubmitLootSplit" }))
+        {
+            <table id="loot-table" class="table table-sm table-condensed" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <td>
+                            <button id="btnRoll" type="submit" class="btn btn-success">Roll</button>
+                        </td>
+                        <td></td>
+                        <td>
+                            <button id="btnClear" type="submit" class="btn btn-danger">Clear</button>
+                        </td>
+                        <td>
+                            <button id="btnToggle" type="submit" class="btn btn-primary">Toggle Lock</button>
+                        </td>
+                        <td>
+                            <button id="btnUser" type="submit" class="btn btn-warning">Add User</button>
+                        </td>
+                        <td></td>
+                        <td>
+                            <button id="btnSave" type="submit" class="btn btn-success" style="float: right;">Save Loot Split</button>
+                        </td>
+                        <td colspan="2">
+                        <td colspan="2">
+                            @Html.DropDownListFor(m => m.SelectedLootSplitId, Model.LootSplitSelectList, "Make Selection", new { @id = "lootSplitDropdown", @class = "form-control input-xs", @style = "width:150px ", onchange = @"form.submit();" })
+                        </td>
+                        <td colspan="17"></td>
+                    </tr>
+                  
+                    <tr>
+                        <th>@Html.Label("Type", "Type", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("ImagePath", "ImagePath", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("", "", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Price", "Price", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Quantity", "Quantity", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Actions", "Actions", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                        <th>@Html.Label("Name", "Name", new { @class = "dataTable-head-column" })</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.LootItems.Count; i++)
+                    {
                         <tr>
                             <td></td>
                             <td></td>
@@ -102,18 +99,15 @@
                             <td></td>
                             <td></td>
                         </tr>
-                        }
-                    </tbody>
-                </table>
-            }
-        </div>
-        </div>
-        <div class="col-sm-12" id="tableActions">
-        </div>
-    <script>
-        $("body").on("submit", "#Form1", function () {
-            return confirm("Do you want to submit?");
-        });
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+    <div class="col-sm-12" id="tableActions">
+    </div>
+</div>
+<script>
             var dt = new Date();
             var excelfilename = (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear() + "_" + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
             var table = null;
@@ -135,10 +129,10 @@
                     var collapsed = !!collapsedGroups[group];
                     rows.nodes().each(function (r) {
                         r.style.display = collapsed ? 'none' : '';
-                    });    
+                    });
                     // Add category name to the <tr>. NOTE: Hardcoded colspan
-                    return $('<tr/>')
-                        .append('<td class="panel-heading" colspan="20"><span class="sign"></span>' + group + ' (' + rows.count() + ')</td>')
+                            return $('<tr/>')
+                                .append('<td class="panel-heading" colspan="27"><span class="sign"></span>' + '&nbsp;&nbsp;&nbsp;' + group + ' (' + rows.count() + ')</td>')
                         .attr('data-name', group)
                         .toggleClass('collapsed', collapsed);
                 }
@@ -189,7 +183,7 @@
                         "url": "/home/AjaxLoot",
                         "type": "POST",
                         data: function (d) {
-                            d.lootSplitId = "0";
+                            d.lootSplitId = $("#lootSplitDropdown"). val();
                         }
                     },
                     "columns": [
@@ -199,10 +193,11 @@
                             "render": function (data) {
                                 return '<img src="/img/' + data + '" />';
                             }
-                    },  
+                    },
                         { "data": "description" },
                         { "data": "price" },
                         { "data": "quantity" },
+                        { "data": "actions" },
                         { "data": null,"defaultContent": "" },
                         { "data": null,"defaultContent": "" },
                         { "data": null,"defaultContent": "" },
@@ -257,7 +252,7 @@
                     console.log("name: " + name);
                 collapsedGroups[name] = !collapsedGroups[name];
                 table.draw(false);
-                });  
+                });
                 //table.search('').columns().search('').draw();
                 table.buttons().container().appendTo('#tableActions');
                 $(document).contextmenu({
@@ -305,7 +300,7 @@
                 });
                 table.MakeCellsEditable({
                 //dataTables cellEdit
-                    "columns": [4, 5],
+                    "columns": [3, 4],
                     "inputTypes": [
                     {
                         "name": "price",
@@ -615,7 +610,17 @@ function DeleteSelectedRows() {
             }
         ]
     });
- }
- 
+        }
+        var message = '@Model.resultMessage';
+        var success = '@Model.resultSuccess';
+        if (message != "") {
+            toastr.error(message, success);
+        }
+        else {
+            toastr.success(message, success);
+
+        }
+
+
 </script>
 

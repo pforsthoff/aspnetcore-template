@@ -2,7 +2,7 @@
   {
     "outputFileName": "wwwroot/css/bundle.bootstrap.min.css",
     "inputFiles": [
-      "wwwroot/css/bootstrap.css",
+      "wwwroot/lib/bootstrap/css/bootstrap.css",
       "wwwroot/css/bootstrap-dialog.css"
     ]
   },
@@ -65,7 +65,7 @@
   {
     "outputFileName": "wwwroot/js/bundle.bootstrap.min.js",
     "inputFiles": [
-      "wwwroot/js/bootstrap.js",
+      "wwwroot/lib/bootstrap/js/bootstrap.js",
       "wwwroot/js/bootstrap-dialog.js"
     ],
     "minify": {

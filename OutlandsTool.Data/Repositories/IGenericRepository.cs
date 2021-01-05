@@ -73,5 +73,6 @@ namespace OutlandsTool.Data.Repositories
 
         T GetSingleInclude(Func<T, bool> where, params Expression<Func<T, object>>[] navigationProperties);
         Task<T> GetSingleIncludeAsync(Expression<Func<T, bool>> where, params Expression<Func<T, object>>[] navigationProperties);
+        T InsertOrUpdate<T>(T entity) where T : class;
      }
 }
